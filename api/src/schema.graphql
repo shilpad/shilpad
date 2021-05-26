@@ -1,0 +1,37 @@
+
+# These type definitions have been generated from your Neo4j database.
+
+# Edit these GraphQL type definitions below to change your GraphQL API
+# You can add custom logic defined with Cypher using the @cypher GraphQL schema directive
+# You can refer to the docs at https://grandstack.io
+type Interest {
+   interestId: Float
+   topic: String!
+   persons_can_teach: [Person] @relation(name: "CAN_TEACH", direction: IN)
+   persons_likes: [Person] @relation(name: "LIKES", direction: IN)
+}
+
+type Person {
+   personId: Float
+   address: String!
+   latitude: Float!
+   longitude: Float!
+   name: String!
+   can_teach: [Interest] @relation(name: "CAN_TEACH", direction: OUT)
+   CAN_TEACH_rel: [CAN_TEACH]
+   friend: [Person] @relation(name: "FRIEND", direction: OUT)
+   FRIEND_rel: [FRIEND]
+}
+
+type CAN_TEACH @relation(name: "CAN_TEACH") {
+  from: Person!
+  to: Interest!
+  level: String!
+}
+
+
+type FRIEND @relation(name: "FRIEND") {
+  from: Person!
+  to: Person!
+  within: String
+}
